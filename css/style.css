@@ -12,11 +12,14 @@ body{
 /* nav **/
 
 nav{
+	padding-top: 0;
+	background-color:#35424a;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
 	padding-right:5%;
 	font-size: 15px;	
+	
 }
 
 
@@ -223,6 +226,10 @@ footer{
 ul{
 	
 	list-style: none;
+}
+.menu-ctn{
+	
+	
 }
 
 .menu-ctn > li{

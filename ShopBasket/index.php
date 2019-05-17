@@ -29,9 +29,9 @@
 	    <ul class="main">
 	   
 	      
-		  <li><a href="Shop.php">Laptops</a></li>   
-		  <li><a href="Shop1.php">Μητρικές Κάρτες</a></li>
-		  <li><a href="Shop2.php">Μνήμες RAM</a></li>
+		  <li><a href="laptop.php">Laptops</a></li>   
+		  <li><a href="kartesgrafikon.php">Κάρτες Γραφικών</a></li>
+		  <li><a href="othones.php">Οθόνες</a></li>
 		  
 	    </ul>
 	 

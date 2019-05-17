@@ -336,8 +336,10 @@ aside {
   padding:  0em 1em;
   border-radius: 16px;
   font-size: 15px;
-  line-height: 2; }
-		
+  line-height: 2; 
+		}
+.img-responsive:hover{  box-shadow: 0 0 2px 1px rgba(0, 140, 186, 0.5);}
+
  </style>
  
  
@@ -440,7 +442,7 @@ function search_product() {
 
                             <div class="product">
 							
-							  <li><a href="<?php echo $row["image_link"]?>"><img  width="200" height="150"  src="<?php echo $row["image"]; ?>" class="img-responsive"></a>
+							<li><a target="_blank" alt="Forest" href="<?php echo $row["image"]; ?>"><img  width="200" height="150"  src="<?php echo $row["image"]; ?>" class="img-responsive"></a>
                                 <h3 class="text-info"><?php echo $row["name"]; ?></h3>
 								<h5 class="itemp">Απόθεμα:<?php echo $row["apothema"]; ?></h5>
 								<h5 class="item_sxolia"><?php echo $row["image_link_sxolia"]; ?></h5>

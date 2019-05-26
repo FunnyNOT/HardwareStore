@@ -1,54 +1,60 @@
+<?php 
+session_start();
+$con = mysqli_connect("localhost", "id9221508_root", "admin", "id9221508_product_details");
 
-
-
-<?php
-    session_start();
-    $database_name = "Product_details";
-    $con = mysqli_connect("localhost","root","",$database_name);
-
-    if (isset($_POST["add"])){
-        if (isset($_SESSION["cart"])){
-            $item_array_id = array_column($_SESSION["cart"],"product_id");
-            if (!in_array($_GET["id"],$item_array_id)){
-                $count = count($_SESSION["cart"]);
-                $item_array = array(
-				    'image_link' => $_POST["hidden_sxolia"],
-				    'apothema' => $_POST["hidden_apothema"],
-                    'product_id' => $_GET["id"],
-                    'item_name' => $_POST["hidden_name"],
-                    'product_price' => $_POST["hidden_price"],
-                    'item_quantity' => $_POST["quantity"],
-                );
-                $_SESSION["cart"][$count] = $item_array;
-                echo '<script>window.location="acer.php"</script>';
-            }else{
-                echo '<script>alert("Product is already Added to Cart")</script>';
-                echo '<script>window.location="acer.php"</script>';
-            }
-        }else{
-            $item_array = array(
+if(isset($_POST["add_to_cart"]))
+{
+	if(isset($_SESSION["shopping_cart"]))
+	{
+		$item_array_id = array_column($_SESSION["shopping_cart"], "item_id");
+		if(!in_array($_GET["id"], $item_array_id))
+		{
+			$count = count($_SESSION["shopping_cart"]);
+			$item_array = array(
 			    'image_link' => $_POST["hidden_sxolia"],
-			    'apothema' => $_POST["hidden_apothema"],
-                'product_id' => $_GET["id"],
-                'item_name' => $_POST["hidden_name"],
-                'product_price' => $_POST["hidden_price"],
-                'item_quantity' => $_POST["quantity"],
-            );
-            $_SESSION["cart"][0] = $item_array;
-        }
-    }
+				'apothema' => $_POST["hidden_apothema"],
+				'item_id'			=>	$_GET["id"],
+				'item_name'			=>	$_POST["hidden_name"],
+				'item_timi'		=>	$_POST["hidden_price"],
+				'item_quantity'		=>	$_POST["quantity"]
+			);
+			$_SESSION["shopping_cart"][$count] = $item_array;
+		}
+		else
+		{
+			echo '<script>alert("Item Already Added")</script>';
+		}
+	}
+	else
+	{
+		$item_array = array(
+		  'image_link' => $_POST["hidden_sxolia"],
+		  'apothema' => $_POST["hidden_apothema"],
+			'item_id'			=>	$_GET["id"],
+			'item_name'			=>	$_POST["hidden_name"],
+			'item_timi'		=>	$_POST["hidden_price"],
+			'item_quantity'		=>	$_POST["quantity"]
+		);
+		$_SESSION["shopping_cart"][0] = $item_array;
+	}
+}
 
-    if (isset($_GET["action"])){
-        if ($_GET["action"] == "delete"){
-            foreach ($_SESSION["cart"] as $keys => $value){
-                if ($value["product_id"] == $_GET["id"]){
-                    unset($_SESSION["cart"][$keys]);
-                    echo '<script>window.location="acer.php"</script>';
-                }
-            }
-        }
-    }
-	
+if(isset($_GET["action"]))
+{
+	if($_GET["action"] == "delete")
+	{
+		foreach($_SESSION["shopping_cart"] as $keys => $values)
+		{
+			if($values["item_id"] == $_GET["id"])
+			{
+				unset($_SESSION["shopping_cart"][$keys]);
+				echo '<script>alert("Item Removed")</script>';
+				echo '<script>window.location="acer.php"</script>';
+			}
+		}
+	}
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -423,8 +429,8 @@ function search_product() {
 </div>
 
 </div>
+<ul id="liststyle">
 <article id="main-col">
-        <ul id="liststyle">
 <h2>Laptops</h2>
             <li>
                   <?php
@@ -451,7 +457,7 @@ function search_product() {
 								<input type="hidden" name="hidden_apothema" value="<?php echo $row["apothema"]; ?>">
 								<input type="hidden" name="hidden_sxolia" value="<?php echo $row["image_link"]; ?>">
                                 <input type="hidden" name="hidden_price" value="<?php echo $row["timi"]; ?>">
-                                <input  class="btn-success" type="submit" name="add"  
+                                <input  class="btn-success" type="submit" name="add_to_cart"  
                                        value="Προσθήκη στο Καλάθι"></li>
 							    
 									  
@@ -465,8 +471,8 @@ function search_product() {
         ?>
     
  
-    
-	</ul>
+    	</ul>
+
 		</article>
 		<div class="table-responsive">
             <table class="table table-bordered">
@@ -482,23 +488,23 @@ function search_product() {
 
 
             <?php
-                if(!empty($_SESSION["cart"])){
+                if(!empty($_SESSION["shopping_cart"])){
                     $total = 0;
-                    foreach ($_SESSION["cart"] as $key => $value) {
+                    foreach ($_SESSION["shopping_cart"] as $key => $value) {
                         ?>
                         <tr>
 						  
                            <td> <?php echo $value["item_name"]; ?></td>
                             <td><?php echo $value["item_quantity"]; ?></td>
-                            <td>€ <?php echo $value["product_price"]; ?></td>
+                            <td>€ <?php echo $value["item_timi"]; ?></td>
                             <td>
-                                € <?php echo number_format($value["item_quantity"] * $value["product_price"], 2); ?></td>
-                            <td class="delete"><a href="acer.php?action=delete&id=<?php echo $value["product_id"] ?>"><span
+                                € <?php echo number_format($value["item_quantity"] * $value["item_timi"], 2); ?></td>
+                            <td class="delete"><a href="acer.php?action=delete&id=<?php echo $value["item_id"] ?>"><span
                                         class="text-danger ">Διαγραφή</span></a></td>
 
                         </tr>
                         <?php
-                        $total = $total + ($value["item_quantity"] * $value["product_price"]);
+                        $total = $total + ($value["item_quantity"] * $value["item_timi"]);
                     }
                         ?>
                         <tr>

@@ -1,4 +1,8 @@
+<?php 
+session_start();
+$con = mysqli_connect("localhost", "id9221508_root", "admin", "id9221508_product_details");
 
+?>
 <html>
  <head>
  <meta charset="utf-8">
